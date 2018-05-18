@@ -1,64 +1,3 @@
-<!DOCTYPE html>
-<html>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<style>
-.slider {
-  -webkit-appearance: none;
-  width: 100%;
-  height: 15px;
-  border-radius: 5px;
-  background: #d3d3d3;
-  outline: none;
-  opacity: 0.7;
-  -webkit-transition: .2s;
-  transition: opacity .2s;
-}
-
-.slider:hover {opacity: 1;}
-
-.slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  cursor: pointer;
-}
-
-.slider::-moz-range-thumb {
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  background: #4CAF50;
-  cursor: pointer;
-}
-#redSlider::-webkit-slider-thumb {background: red;}
-#redSlider::-moz-range-thumb {background: red;}
-#greenSlider::-webkit-slider-thumb {background: green;}
-#greenSlider::-moz-range-thumb {background: green;}
-#blueSlider::-webkit-slider-thumb {background: blue;}
-#blueSlider::-moz-range-thumb {background: blue;}
-</style>
-
-<body>
-<div class="w3-container">
-<h1>RGB Color</h1>
-<div class="w3-cell-row">
-<div class="w3-container w3-cell w3-mobile">
-<p><input type="range" min="0" max="255" value="0" class="slider" id="redSlider"></p>
-<p><input type="range" min="0" max="255" value="0" class="slider" id="greenSlider"></p>
-<p><input type="range" min="0" max="255" value="0" class="slider" id="blueSlider"></p>
-</div>
-<div class="w3-container w3-cell w3-mobile" style="background-color:black" id="colorShow">
-<div></div>
-</div>
-</div>
-<p>Or pick a color: <input type="color" id="pickColor"></p>
-</div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
-<script src="https://www.w3schools.com/lib/w3color.js"></script>
-<script>
 var socket = io(); //load socket.io-client and connect to the host that serves the page
 var rgb = w3color("rgb(0,0,0)"); //we use the w3color.js library to keep the color as an object
 window.addEventListener("load", function(){ //when page loads
@@ -93,10 +32,3 @@ window.addEventListener("load", function(){ //when page loads
    socket.emit("rgbLed", rgb);  //send the updated color to RGB LED via WebSocket
   });
 });
-</script>
-
-<h2>Indoor Crops (hydroponics)</h2>
-<h2>Outdoor Crops (farmbot)</h2>
-</html>
-</body>
-</html>

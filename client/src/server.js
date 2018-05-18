@@ -1,6 +1,6 @@
 var http = require('http').createServer(handler); //require http server, and create server with function handler()
 var fs = require('fs'); //require filesystem module
-var io = require('socket.io')(http) //require socket.io module and pass the http object (server)
+var io = require('socket.io')(http); //require socket.io module and pass the http object (server)
 //var Gpio = require('pigpio').Gpio, //include pigpio to interact with the GPIO
 var Gpio = require('../test/pigpio-mock').Gpio,
 ledRed = new Gpio(4, {mode: Gpio.OUTPUT}), //use GPIO pin 4 as output for RED

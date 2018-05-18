@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./src/index.js"
+    "start": "webpack-dev-server --mode development --host $IP --public $C9_HOSTNAME --content-base public --output-public-path build --open"
   },
   "repository": {
     "type": "git",
@@ -20,5 +20,10 @@
   "bugs": {
     "url": "https://github.com/rbergenl/autofarm/issues"
   },
-  "homepage": "https://github.com/rbergenl/autofarm#readme"
+  "homepage": "https://github.com/rbergenl/autofarm#readme",
+  "devDependencies": {
+    "webpack": "^4.8.3",
+    "webpack-cli": "^2.1.3",
+    "webpack-dev-server": "^3.1.4"
+  }
 }
