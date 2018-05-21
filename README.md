@@ -38,10 +38,12 @@ Autofarm
 ### Frontend
 
 #### Redux Flows
-- Auth Flow
-- Meal Flow
-- Crop Flow
-- 
+1. Auth Flow
+![](docs/images/redux-auth-flow.png)
+
+2. Meal Flow
+3. Crop Flow
+
 
 
 ## Authentication
