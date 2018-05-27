@@ -28,7 +28,8 @@
 - https://material-ui.com/getting-started/installation/
 
 # Setup Project
-## Node and webpack, babel, react, redux, sass and material-ui
+## Webpack
+- `npm init --yes`
 - `npm install --save-dev webpack webpack-dev-server webpack-cli`
 - create the `webpack.config.js` file
 - add to package.json: `"start": "webpack-dev-server --mode development"`
@@ -37,14 +38,15 @@
 - `npm install --save-dev loglevel`
 - create a file `src/config/index.js` with the code `import config from './config.json'; export default { logLevel: config.LogLevel };`
 - create a file `src/config/config.json` with the code `{ "LogLevel": "silent" }`
-- add to `.gitignore` the line `./src/config/config.json`
+- add to `.gitignore` the line `src/config/config.json`
 - add to `index.web.js` at the top `import * as log from 'loglevel'; import Config from './config'; log.setLevel(Config.logLevel);`
 
-## React, babel and material-ui and sass
+## React
 - `$ npm install --save-dev babel-core babel-loader babel-preset-env`
 - add to `webpack.config.js` the module.rule: `{ test: /\.js$/, exclude: /node_modules/, use: ['babel-loader']	}`
-- `npm install --save react reat-dom babel-preset-react babel-preset-stage-3` (stage-3 for spread operator)
-- add to `index.web.js` the followin snippet:
+- `npm install --save react reat-dom babel-preset-react`
+- add to `.babelrc` the code `{ "presets": ["env", "react"] }`
+- - add to `index.web.js` the followin snippet:
 ```javascript
 import React from 'react';
 import { render } from 'react-dom';
@@ -53,6 +55,54 @@ render(
   document.getElementById('root'),
 );
 ```
+
+## Router
+- `npm install --save react-router-dom history`
+- add to `webpack.config.js` to the devServer settings: `historyApiFallback: true`
+- add to `components/Routers/RootRouter` the following snippet (include the implicit imports):
+```javascript
+export default class RootRouter extends Component {
+  componentWillMount() {
+    this.props = {
+      loggedIn: true
+    };
+  }
+  render() {
+    const { loggedIn } = this.props;
+
+    return (
+      <Router history={history}>
+        <Switch>
+          <Route
+            path="/login"
+            exact
+            component={Login}
+          />
+          <Route
+            path="/register"
+            exact
+            component={Register}
+          />
+          <PrivateRoute
+            path="/"
+            authStatus={loggedIn}
+            component={App}
+          />
+        </Switch>
+      </Router>
+    );
+  }
+}
+```
+
+## Redux
+- `npm install --save redux react-redux redux-thunk`
+- create the file `configureStore.js`.
+- create the file `rootReducer.js`.
+- create the file `actionsTypes.js`.
+- add to `index.web.js` the following snippet: `import configureStore from './configureStore'; import { Provider } from 'react-redux'; const store = configureStore;` and wrap the themeprovider with `<Provider store={store}>`
+- create `actions/authActions.js`
+- create `reducers/authReducer.js`
 
 ## Material-ui
 - `npm install @material-ui/core`
@@ -63,12 +113,7 @@ render(
 - replace in `index.web.js` the `<h1>` with `<Button variant="raised" color="primary">` and load at the top `import Button from '@material-ui/core/Button';`
 - add `import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';` and `const theme = createMuiTheme();` with wrapping the button with `<MuiThemeProvider theme={theme}>`
 
-## Redux
-- `npm install --save redux react-redux redux-thunk`
-- create the file `configureStore.js`.
-- create the file `rootReducer.js`.
-- add to `index.web.js` the following snippet: `import configureStore from './configureStore'; import { Provider } from 'react-redux'; const store = configureStore;` and wrap the themeprovider with `<Provider store={store}>`
+
+`npm install babel-preset-stage-3` and add to `.babelrc` (stage-3 for spread operator)
 
 ## WebApp (manifest.json, icons, serviceworker)
-
-

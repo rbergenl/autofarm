@@ -12,6 +12,7 @@ module.exports = {
 	devServer: {
 		host: process.env.IP,
 		public: process.env.C9_HOSTNAME,
-		contentBase: 'public'
+		contentBase: 'public',
+		historyApiFallback: true
 	}
 };

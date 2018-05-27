@@ -1,6 +1,8 @@
+// reducers listen to actions and update the state
+
 import {
   LOGGED_IN_STATUS_CHANGED,
-  LOGIN_USER_SUCCESS,
+/*  LOGIN_USER_SUCCESS,
   LOGIN_USER_FAILED,
   LOGIN_USER,
   REGISTER_USER_SUCCESS,
@@ -8,23 +10,29 @@ import {
   REGISTER_USER,
   AUTH_FORM_UPDATE,
   IDENTITY_UPDATED,
-  LOGOUT,
+  LOGOUT,*/
 } from '../actionTypes';
 
 export const initialState = {
-  username: '',
+  loggedIn: true,
+/*  username: '',
   password: '',
   email: '',
   error: '',
   notice: '',
   loading: false,
-  loggedIn: false,
   user: null,
-  identityId: '',
+  identityId: '',*/
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case LOGGED_IN_STATUS_CHANGED:
+      return {
+        ...state,
+        loggedIn: action.loggedIn,
+      };
+      /*
     case LOGIN_USER:
       return {
         ...state,
@@ -43,11 +51,6 @@ export default (state = initialState, action) => {
         error: action.error || 'Authentication Failed',
         password: '',
         loading: false,
-      };
-    case LOGGED_IN_STATUS_CHANGED:
-      return {
-        ...state,
-        loggedIn: action.loggedIn,
       };
     case LOGOUT:
       return initialState;
@@ -79,6 +82,7 @@ export default (state = initialState, action) => {
         ...state,
         identityId: action.identityId,
       };
+      */
     default:
       return state;
   }
