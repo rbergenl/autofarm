@@ -3,19 +3,53 @@
  */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Route, Router, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 
-import history from '../../../lib/history';
-
-import Login from '../Auth/Login';
-import Register from '../Auth/Register';
-import App from '../App';
-import PrivateRoute from './PrivateRoute';
+import Login from '../components-web/Auth/Login';
+import Register from '../components-web/Auth/Register';
+import App from './App';
 
 import { connect } from 'react-redux';
-import { loggedInStatusChanged } from '../../../actions/authActions';
+import { loggedInStatusChanged } from '../actions/authActions';
 
-export class RootRouter extends Component {
+
+/**
+ * Component that redirects user to the login page if not signed in
+ */
+const PrivateRoute = ({ component: TheComponent, authStatus, ...restOfProps }) => (
+  <Route
+    {...restOfProps}
+    render={props => (
+      authStatus === false ?
+        (<Redirect
+          to={{
+            pathname: '/login',
+            state: { from: props.location },
+          }}
+        />) :
+        (<TheComponent {...props} />)
+    )}
+  />
+);
+
+PrivateRoute.propTypes = {
+  authStatus: PropTypes.bool.isRequired,
+  component: PropTypes.func,
+  location: PropTypes.object,
+};
+
+PrivateRoute.defaultProps = {
+  component: null,
+  location: null,
+};
+
+class RootRouter extends Component {
+  
+  static propTypes = {
+    loggedIn: PropTypes.bool.isRequired,
+    loggedInStatusChanged: PropTypes.func.isRequired
+  }
+  
   componentWillMount() {
     this.validateUserSession();
   }
@@ -33,7 +67,6 @@ export class RootRouter extends Component {
     const { loggedIn } = this.props;
 
     return (
-      <Router history={history}>
         <Switch>
           <Route
             path="/login"
@@ -51,16 +84,9 @@ export class RootRouter extends Component {
             component={App}
           />
         </Switch>
-      </Router>
     );
   }
 }
-
-RootRouter.propTypes = {
-  loggedIn: PropTypes.bool.isRequired,
-  loggedInStatusChanged: PropTypes.func.isRequired,
-};
-
 
 const mapStateToProps = state => (
   { loggedIn: state.auth.loggedIn }

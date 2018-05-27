@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import auth from './reducers/authReducer';
+import auth from './authReducer';
 //import rooms from './roomsReducer';
 //import chat from './chatReducer';
 //import users from './usersReducer';

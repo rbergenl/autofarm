@@ -8,7 +8,9 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server --mode development"
+    "start": "webpack-dev-server --mode development",
+    "build": "webpack --mode production",
+    "createfirebaseconfig": "firebase setup:web --json > ./src/config/firebase.json"
   },
   "repository": {
     "type": "git",
@@ -25,6 +27,7 @@
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-2": "^6.24.1",
     "babel-preset-stage-3": "^6.24.1",
     "css-loader": "^0.28.11",
     "style-loader": "^0.21.0",

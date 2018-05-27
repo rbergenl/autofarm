@@ -20,12 +20,18 @@
 ## Authentication
 - https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_create_oidc.html
 - https://aws.amazon.com/blogs/security/building-an-app-using-amazon-cognito-and-an-openid-connect-identity-provider/
+- https://github.com/tylermcginnis/react-router-firebase-auth
 
 ## Serverless
 - https://hackernoon.com/a-crash-course-on-serverless-with-node-js-632b37d58b44
  
 ## UI
 - https://material-ui.com/getting-started/installation/
+- 
+## Redux
+- https://codesandbox.io/s/github/reactjs/redux/tree/master/examples/shopping-cart
+- https://codesandbox.io/s/github/reactjs/redux/tree/master/examples/real-world
+- 
 
 # Setup Project
 ## Webpack
@@ -94,26 +100,37 @@ export default class RootRouter extends Component {
   }
 }
 ```
+- Login component uses `withRouter(connect());`
 
 ## Redux
 - `npm install --save redux react-redux redux-thunk`
 - create the file `configureStore.js`.
-- create the file `rootReducer.js`.
-- create the file `actionsTypes.js`.
+- create the file `reducers/index.js`.
+- create the file `actions/index.js`.
 - add to `index.web.js` the following snippet: `import configureStore from './configureStore'; import { Provider } from 'react-redux'; const store = configureStore;` and wrap the themeprovider with `<Provider store={store}>`
 - create `actions/authActions.js`
 - create `reducers/authReducer.js`
 
+- `npm install --save-dev babel-preset-stage-2` and add to `.babelrc` (stage-2 for class propTypes)
+- `npm install --save-dev babel-preset-stage-3` and add to `.babelrc` (stage-3 for spread operator)
+
 ## Material-ui
-- `npm install @material-ui/core`
-- `npm install --save-dev style-loader css-loader`
-- add to `webpack.config.js` the module.rule: `{ test: /\.css$/, exclude: /node_modules/, use: ['style-loader', 'css-loader'] }`
-- create `src/index.css` with the code `body { margin: 0; padding: 0; font-family: 'Roboto', sans-serif; }` and add at the top of `index.web.js` the code `import './index.css';`
-- add to `index.html` the following snippet: `<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet"><link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">`
-- replace in `index.web.js` the `<h1>` with `<Button variant="raised" color="primary">` and load at the top `import Button from '@material-ui/core/Button';`
-- add `import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';` and `const theme = createMuiTheme();` with wrapping the button with `<MuiThemeProvider theme={theme}>`
+- Run `$ npm install @material-ui/core`
+- Run `$ npm install --save-dev style-loader css-loader`
+- Add to `webpack.config.js` the module.rule: `{ test: /\.css$/, exclude: /node_modules/, use: ['style-loader', 'css-loader'] }`
+- Create `src/index.css` with the code `body { margin: 0; padding: 0; font-family: 'Roboto', sans-serif; }` and add at the top of `index.web.js` the code `import './index.css';`
+- Add to `index.html` the following snippet: `<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet"><link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">`
+- Replace in `index.web.js` the `<h1>` with `<Button variant="raised" color="primary">` and load at the top `import Button from '@material-ui/core/Button';`
+- Add `import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';` and `const theme = createMuiTheme();` with wrapping the button with `<MuiThemeProvider theme={theme}>`
 
+## Firebase Hosting and Authentication
+- add to package.json `"createfirebaseconf": "firebase setup:web --json > ./src/config/firebase.json"`
+- Run `$ npm install -g firebase-tools`
+- Run `$ firebase login --no-localhost`
+- Run `$ firebase init` and select all options (firestore, functions, hosting, database, etc..) and accept all defaults (but dont install dependencies)
+- Run `$ npm --prefix ./functions install` (to now outside the firebase init do the installation of dependencies in the just generated functions folder)
+- Run `$ firebase serve --port $PORT --host $IP` to check the preview locally (do CTRL+C to stop)
+- Run `$ firebase deploy`
 
-`npm install babel-preset-stage-3` and add to `.babelrc` (stage-3 for spread operator)
 
 ## WebApp (manifest.json, icons, serviceworker)

@@ -11,7 +11,7 @@ import {
   AUTH_FORM_UPDATE,
   IDENTITY_UPDATED,
   LOGOUT,*/
-} from '../actionTypes';
+} from '../actions';
 
 export const initialState = {
   loggedIn: true,

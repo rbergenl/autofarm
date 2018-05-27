@@ -8,7 +8,9 @@ import React from 'react';
 import { render } from 'react-dom';
 
 // Router
-import RootRouter from './components/web/Routers/RootRouter';
+import { Router } from 'react-router-dom';
+import Root from './containers-web/Root';
+import history from './lib/history';
 
 // Redux
 import configureStore from './configureStore';
@@ -23,7 +25,9 @@ import './index.css';
 render(
   <Provider store={store}>
     <MuiThemeProvider theme={theme}>
-      <RootRouter />
+      <Router history={history}>
+        <Root />
+      </Router>
     </MuiThemeProvider>
   </Provider>,
   document.getElementById('root'),
