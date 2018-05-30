@@ -1,7 +1,9 @@
 module.exports = {
 	entry: './src/index.web.js',
 	output: {
-		filename: 'main.js'
+		filename: 'main.js',
+		path: __dirname + '/public/build',
+		publicPath: '/build'
 	},
 	module: {
 		rules: [

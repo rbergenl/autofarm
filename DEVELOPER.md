@@ -27,13 +27,21 @@
  
 ## UI
 - https://material-ui.com/getting-started/installation/
-- 
+- https://github.com/TeamWertarbyte/mdi-material-ui
+ 
 ## Redux
 - https://codesandbox.io/s/github/reactjs/redux/tree/master/examples/shopping-cart
 - https://codesandbox.io/s/github/reactjs/redux/tree/master/examples/real-world
 - 
 
-# Setup Project
+# Setup Web Project
+
+## Prerequisites
+- Have a Google account
+- Have a Github account and a repository created
+- Login to Cloud9 with your Github account and start a workspace attached to the repository
+- Create a project in console.firebase.google.com (and enable Firestore in the Database section)
+
 ## Webpack
 - `npm init --yes`
 - `npm install --save-dev webpack webpack-dev-server webpack-cli`
@@ -50,7 +58,7 @@
 ## React
 - `$ npm install --save-dev babel-core babel-loader babel-preset-env`
 - add to `webpack.config.js` the module.rule: `{ test: /\.js$/, exclude: /node_modules/, use: ['babel-loader']	}`
-- `npm install --save react reat-dom babel-preset-react`
+- `npm install --save react react-dom babel-preset-react`
 - add to `.babelrc` the code `{ "presets": ["env", "react"] }`
 - - add to `index.web.js` the followin snippet:
 ```javascript
@@ -114,6 +122,12 @@ export default class RootRouter extends Component {
 - `npm install --save-dev babel-preset-stage-2` and add to `.babelrc` (stage-2 for class propTypes)
 - `npm install --save-dev babel-preset-stage-3` and add to `.babelrc` (stage-3 for spread operator)
 
+### Container (logic)
+- add withRouter() so that the location gets updated into child-components as well
+
+### Component (presentation)
+- 
+
 ## Material-ui
 - Run `$ npm install @material-ui/core`
 - Run `$ npm install --save-dev style-loader css-loader`
@@ -122,6 +136,10 @@ export default class RootRouter extends Component {
 - Add to `index.html` the following snippet: `<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet"><link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">`
 - Replace in `index.web.js` the `<h1>` with `<Button variant="raised" color="primary">` and load at the top `import Button from '@material-ui/core/Button';`
 - Add `import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';` and `const theme = createMuiTheme();` with wrapping the button with `<MuiThemeProvider theme={theme}>`
+
+## Add Icons
+- Run `$ npm install mdi-material-ui --save`
+- Add `import Google from 'mdi-material-ui/Google';` and `<Google />`.
 
 ## Firebase Hosting and Authentication
 - add to package.json `"createfirebaseconf": "firebase setup:web --json > ./src/config/firebase.json"`
@@ -132,5 +150,37 @@ export default class RootRouter extends Component {
 - Run `$ firebase serve --port $PORT --host $IP` to check the preview locally (do CTRL+C to stop)
 - Run `$ firebase deploy`
 
+## Add Firebase to App
+- At https://console.firebase.google.com the project, enable Google signin on Authentication section; and add the hosting URL to 'gemachtigde domeinen'
+- Run `$ npm install --save firebase`
+
 
 ## WebApp (manifest.json, icons, serviceworker)
+
+
+# Setup Native Project
+
+## Prerequisites
+- Have an Expo.io account
+
+## Expo and React-Native
+- Run `$ npm install -g exp react-native-cli`
+- make sure package.json has: (as 'dependencies', not as 'devDependencies' and then react-native version should be same as expo sdk version; check latest npm expo version available)
+```javascript
+"expo": "26.0.0",
+"react-native": "https://github.com/expo/react-native/archive/sdk-26.0.0.tar.gz"
+```
+- Run `$ npm install expo react-native`
+- and app.json has (same sdk as in the package.json; and the name is the one given at AppRegistry.registerComponent (otherwise expo will search for the app called "main" by default):
+````json
+{
+  "expo": {
+    "name": "Croppy",
+    "sdkVersion": "26.0.0"
+  }
+}
+```
+- Have `package.json` main point to `src/index.js`
+- Run `$ exp login`
+- Run `$ exp start --tunnel` (tunnel to be able to reach it through the internet, and will start bundler itself; wait until it said "dependency graph loaded")
+- (install expo app on your phone and scan the qr code)

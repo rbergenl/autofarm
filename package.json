@@ -2,7 +2,7 @@
   "name": "workspace",
   "version": "1.0.0",
   "description": "Application to manage an automated farm",
-  "main": "index.js",
+  "main": "src/index.js",
   "directories": {
     "test": "test"
   },
@@ -10,6 +10,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --mode development",
     "build": "webpack --mode production",
+    "config": "",
     "createfirebaseconfig": "firebase setup:web --json > ./src/config/firebase.json"
   },
   "repository": {
@@ -27,9 +28,12 @@
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
     "babel-preset-stage-3": "^6.24.1",
     "css-loader": "^0.28.11",
+    "expo": "26.0.0",
     "style-loader": "^0.21.0",
     "webpack": "^4.8.3",
     "webpack-cli": "^2.1.4",
@@ -37,11 +41,13 @@
   },
   "dependencies": {
     "@material-ui/core": "^1.0.0",
-    "babel-preset-react": "^6.24.1",
+    "firebase": "^5.0.4",
     "history": "^4.7.2",
     "loglevel": "^1.6.1",
+    "mdi-material-ui": "^5.1.0",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-26.0.0.tar.gz",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
     "redux": "^4.0.0",

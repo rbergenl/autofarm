@@ -58,3 +58,4 @@ typings/
 .env
 
 src/config/config.json
+src/config/firebase.json

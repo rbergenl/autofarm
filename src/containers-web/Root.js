@@ -3,15 +3,14 @@
  */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 
-import Login from '../components-web/Auth/Login';
-import Register from '../components-web/Auth/Register';
+import Login from './Login';
+import Register from './Register';
 import App from './App';
 
 import { connect } from 'react-redux';
 import { loggedInStatusChanged } from '../actions/authActions';
-
 
 /**
  * Component that redirects user to the login page if not signed in
@@ -43,7 +42,17 @@ PrivateRoute.defaultProps = {
   location: null,
 };
 
-class RootRouter extends Component {
+
+const PublicRoute = ({component: Component, authStatus, ...rest}) => {
+  return (
+    <Route
+      {...rest}
+      render={(props) => <Component {...props} />}
+    />
+  );
+};
+
+class Root extends Component {
   
   static propTypes = {
     loggedIn: PropTypes.bool.isRequired,
@@ -68,12 +77,12 @@ class RootRouter extends Component {
 
     return (
         <Switch>
-          <Route
+          <PublicRoute
             path="/login"
             exact
             component={Login}
           />
-          <Route
+          <PublicRoute
             path="/register"
             exact
             component={Register}
@@ -92,5 +101,4 @@ const mapStateToProps = state => (
   { loggedIn: state.auth.loggedIn }
 );
 
-
-export default connect(mapStateToProps, { loggedInStatusChanged })(RootRouter);
+export default withRouter(connect(mapStateToProps, { loggedInStatusChanged })(Root));
