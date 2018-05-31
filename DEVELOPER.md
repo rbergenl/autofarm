@@ -16,23 +16,25 @@
 - https://docs.aws.amazon.com/iot/latest/developerguide/protocols.html
 - https://github.com/aws-samples/aws-iot-examples
 - https://github.com/aws-samples/aws-iot-chat-example
- 
+
 ## Authentication
 - https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_create_oidc.html
 - https://aws.amazon.com/blogs/security/building-an-app-using-amazon-cognito-and-an-openid-connect-identity-provider/
 - https://github.com/tylermcginnis/react-router-firebase-auth
+- https://docs.expo.io/versions/v27.0.0/sdk/google
 
 ## Serverless
 - https://hackernoon.com/a-crash-course-on-serverless-with-node-js-632b37d58b44
- 
+
 ## UI
 - https://material-ui.com/getting-started/installation/
 - https://github.com/TeamWertarbyte/mdi-material-ui
- 
+- https://github.com/oblador/react-native-vector-icons
+
 ## Redux
 - https://codesandbox.io/s/github/reactjs/redux/tree/master/examples/shopping-cart
 - https://codesandbox.io/s/github/reactjs/redux/tree/master/examples/real-world
-- 
+-
 
 # Setup Web Project
 
@@ -126,7 +128,7 @@ export default class RootRouter extends Component {
 - add withRouter() so that the location gets updated into child-components as well
 
 ### Component (presentation)
-- 
+-
 
 ## Material-ui
 - Run `$ npm install @material-ui/core`
@@ -162,15 +164,19 @@ export default class RootRouter extends Component {
 
 ## Prerequisites
 - Have an Expo.io account
+- Have an Expo client installed on an android device.
+- Have Genymotion installed
 
 ## Expo and React-Native
+- Add to `.gitignore` the line `.expo/*`
+- Add to `.babelrc` presets `babel-preset-expo`
 - Run `$ npm install -g exp react-native-cli`
 - make sure package.json has: (as 'dependencies', not as 'devDependencies' and then react-native version should be same as expo sdk version; check latest npm expo version available)
 ```javascript
 "expo": "26.0.0",
 "react-native": "https://github.com/expo/react-native/archive/sdk-26.0.0.tar.gz"
 ```
-- Run `$ npm install expo react-native`
+- Run `$ npm install --save expo react-native` (important! expo should be saved under 'dependencies' and not under 'devDependencies')
 - and app.json has (same sdk as in the package.json; and the name is the one given at AppRegistry.registerComponent (otherwise expo will search for the app called "main" by default):
 ````json
 {
@@ -182,5 +188,15 @@ export default class RootRouter extends Component {
 ```
 - Have `package.json` main point to `src/index.js`
 - Run `$ exp login`
-- Run `$ exp start --tunnel` (tunnel to be able to reach it through the internet, and will start bundler itself; wait until it said "dependency graph loaded")
-- (install expo app on your phone and scan the qr code)
+- Run on Cloud9: `$ exp start --tunnel` (tunnel to be able to reach it through the internet, and will start bundler itself; wait until it said "dependency graph loaded", then scan the qr code with the Expo client on an android device).
+- Run on laptop: `$ exp start`, start Genymotion device, then `$ exp android`.
+
+
+- In console.developers.google.com, choose at the top the correct app (already added there via creation in firebase). Choose create credentials > OAuth > Android > Run in the project 'openssl rand -base64 32 | openssl sha1 -c', use 'host.exp.exponent' as packagename, and the result, give it to 'androidClientId'.
+- npm install --save-dev babel-preset-expo and add to .babelrc
+- import Expo from 'expo'; Expo.Google.logInAsync(options);
+
+
+### Common problems
+-when loading firebase while using react-native, you might get the error "undefined self.fetch". This problem is in the fetch module, and can be solved by opening the from the Dev menu on the device the Remote JS debugger
+- Install the latest version of XDE https://github.com/expo/xde/releases. If you don’t update, you will see an error similar to: `Error: Cannot find module 'exponent/tools/hashAssetFiles'...` (actually, it is because of expo should be under 'dependencies' in the package.json)

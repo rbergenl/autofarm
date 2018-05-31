@@ -14,7 +14,7 @@ import {
 } from '../actions';
 
 export const initialState = {
-  loggedIn: true,
+  loggedIn: false,
 /*  username: '',
   password: '',
   email: '',

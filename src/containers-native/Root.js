@@ -1,6 +1,10 @@
-import { connect } from 'react-redux';
+/**
+ * Router component in charge of navigation when not signed in
+ */
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { Route, Switch, Redirect, withRouter } from 'react-router-native';
 
-import React, { Component } from 'react'
 import {
   StyleSheet,
   Text,
@@ -9,39 +13,28 @@ import {
   TouchableHighlight
 } from 'react-native'
 
-import { NativeRouter, Route, Link, Redirect, withRouter } from 'react-router-native'
+//import Login from './Login';
+//import Register from './Register';
+//import App from './App';
 
-const AuthExample = () => (
-  <NativeRouter>
-    <View style={styles.container}>
-      <AuthButton/>
-      <View style={styles.nav}>
-        <Link
-          to="/public"
-          style={styles.navItem}
-          underlayColor='#f0f4f7'>
-            <Text>Public Page</Text>
-        </Link>
-        <Link
-          to="/protected"
-          style={styles.navItem}
-          underlayColor='#f0f4f7'>
-            <Text>Protected Page</Text>
-        </Link>
-      </View>
+import { connect } from 'react-redux';
+import { loggedInStatusChanged, loginUser } from '../actions/authActions';
 
-      <Route path="/public" component={Public}/>
-      <Route path="/login" component={Login}/>
-      <PrivateRoute path="/protected" component={Protected}/>
-    </View>
-  </NativeRouter>
-)
+import Expo from 'expo';
+import Config from './config';
 
 const fakeAuth = {
   isAuthenticated: false,
   authenticate(cb) {
-    this.isAuthenticated = true
-    setTimeout(cb, 100) // fake async
+    Expo.Google.logInAsync({
+       androidClientId: Config.androidClientId,
+       scopes: ['profile', 'email']
+     }).then(function(result){
+       console.log(result)
+     }, function(e){
+       console.log(e)
+     });
+    //loginUser('username', 'password');
   },
   signout(cb) {
     this.isAuthenticated = false
@@ -49,67 +42,22 @@ const fakeAuth = {
   }
 }
 
-const AuthButton = withRouter(({ history }) => (
-  fakeAuth.isAuthenticated ? (
-    <View>
-      <Text>Welcome!</Text>
-      <TouchableHighlight style={styles.btn} underlayColor='#f0f4f7' onPress={() => {
-        fakeAuth.signout(() => history.push('/'))
-      }}><Text>Sign out</Text></TouchableHighlight>
-    </View>
-  ) : (
-    <Text>You are not logged in.</Text>
-  )
-))
-
-const PrivateRoute = ({ component: Component, ...rest }) => (
-  <Route {...rest} render={props => (
-    fakeAuth.isAuthenticated ? (
-      <Component {...props}/>
-    ) : (
-      <Redirect to={{
-        pathname: '/login',
-        state: { from: props.location }
-      }}/>
-    )
-  )}/>
-)
-
-const Public = () => <Text style={styles.header}>Public</Text>
-const Protected = () => <Text style={styles.header}>Protected</Text>
-
 class Login extends Component {
-  state = {
-    redirectToReferrer: false
-  }
 
   login = () => {
     fakeAuth.authenticate(() => {
-      this.setState({ redirectToReferrer: true })
+    //  this.setState({ redirectToReferrer: true })
     })
   }
 
   render() {
-    const { from } = this.props.location.state || { from: { pathname: '/' } }
-    const { redirectToReferrer } = this.state
-
-    if (redirectToReferrer) {
-      return (
-        <Redirect to={from}/>
-      )
-    }
-
     return (
-      <View>
-        <Text>You must log in to view the page at {from.pathname}</Text>
-
-        <TouchableHighlight style={styles.btn} underlayColor='#f0f4f7' onPress={this.login}>
-          <Text>Log in</Text>
-        </TouchableHighlight>
-      </View>
+      <TouchableHighlight style={styles.btn} underlayColor='#f0f4f7' onPress={this.login}>
+        <Text>Log in</Text>
+      </TouchableHighlight>
     )
   }
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -138,8 +86,101 @@ const styles = StyleSheet.create({
   }
 })
 
+const Register = () => (
+    <Text>Register Page</Text>
+);
+const App = () => (
+    <Text>App Page</Text>
+);
+/**
+ * Component that redirects user to the login page if not signed in
+ */
+const PrivateRoute = ({ component: TheComponent, authStatus, ...restOfProps }) => (
+  <Route
+    {...restOfProps}
+    render={props => (
+      authStatus === false ?
+        (<Redirect
+          to={{
+            pathname: '/login',
+            state: { from: props.location },
+          }}
+        />) :
+        (<TheComponent {...props} />)
+    )}
+  />
+);
+
+PrivateRoute.propTypes = {
+  authStatus: PropTypes.bool.isRequired,
+  component: PropTypes.func,
+  location: PropTypes.object,
+};
+
+PrivateRoute.defaultProps = {
+  component: null,
+  location: null,
+};
+
+
+const PublicRoute = ({component: Component, authStatus, ...rest}) => {
+  return (
+    <Route
+      {...rest}
+      render={(props) => <Component {...props} />}
+    />
+  );
+};
+
+class Root extends Component {
+
+  static propTypes = {
+    loggedIn: PropTypes.bool.isRequired,
+    loggedInStatusChanged: PropTypes.func.isRequired
+  }
+
+  componentWillMount() {
+    this.validateUserSession();
+  }
+
+  // Check browser sessionStorage to check logged in status
+  validateUserSession() {
+  //  if (sessionStorage.getItem('isLoggedIn') === 'true') {
+    //  this.props.loggedInStatusChanged(true);
+  //  } else {
+    //  this.props.loggedInStatusChanged(false);
+  //  }
+  }
+
+  render() {
+    const { loggedIn } = this.props;
+
+    return (
+      <View style={styles.container}>
+        <Switch>
+          <PublicRoute
+            path="/login"
+            exact
+            component={Login}
+          />
+          <PublicRoute
+            path="/register"
+            exact
+            component={Register}
+          />
+          <PrivateRoute
+            path="/"
+            authStatus={loggedIn}
+            component={App}
+          />
+        </Switch>
+      </View>
+    );
+  }
+}
+
 const mapStateToProps = state => (
   { loggedIn: state.auth.loggedIn }
 );
 
-export default connect(mapStateToProps, { })(AuthExample);
+export default withRouter(connect(mapStateToProps, { loggedInStatusChanged })(Root));

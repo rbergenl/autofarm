@@ -59,4 +59,4 @@ typings/
 
 src/config/config.json
 src/config/firebase.json
-.expo/
+.expo/*

@@ -6,7 +6,7 @@ import {AppRegistry, StyleSheet, Text, View} from 'react-native';
 
 // Router
 import { NativeRouter } from 'react-router-native';
-import AuthExample from './containers-native/Root';
+import Root from './containers-native/Root';
 //import history from './lib/history';
 
 // Redux
@@ -19,25 +19,11 @@ class HelloWorld extends React.Component {
     return (
       <Provider store={store}>
         <NativeRouter>
-          <AuthExample />
+          <Root />
         </NativeRouter>
       </Provider>
     );
   }
 }
-
-
-var styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-  hello: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-});
-
 
 AppRegistry.registerComponent('main', () => HelloWorld);

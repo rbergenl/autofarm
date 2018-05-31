@@ -3,6 +3,7 @@
         "env",
         "react",
         "stage-2",
-        "stage-3"
+        "stage-3",
+        "babel-preset-expo"
     ]
 }
