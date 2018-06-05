@@ -10,7 +10,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --mode development",
     "build": "webpack --mode production",
-    "config": "",
+    "config": "node ./src/config/create",
     "createfirebaseconfig": "firebase setup:web --json > ./src/config/firebase.json"
   },
   "repository": {
