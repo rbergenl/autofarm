@@ -1,6 +1,6 @@
 // actions are functions that might interact with services, updates values and map these to be dispatched to reducers
 import * as log from 'loglevel';
-import history from '../lib/history';
+//import history from '../lib/history';
 import * as Firebase from '../lib/firebase';
 
 import {
@@ -25,13 +25,13 @@ export const loginUser = (username, password) => (
 
 const loginUserSuccess = (dispatch, userData) => {
   log.info('logged in', userData);
-  sessionStorage.setItem('isLoggedIn', 'true');
+  //sessionStorage.setItem('isLoggedIn', 'true');
   dispatch({ type: LOGGED_IN_STATUS_CHANGED, loggedIn: true });
-  history.push('/');
+  //history.push('/');
 };
 
 const loginUserFail = () => {
-  
+
 };
 
 export const logoutUser = () => (
@@ -44,14 +44,14 @@ export const logoutUser = () => (
       });
   }
 );
-    
+
 const logoutUserSuccess = (dispatch) => {
   log.info('logged out');
-  sessionStorage.removeItem('isLoggedIn');
+  //sessionStorage.removeItem('isLoggedIn');
   dispatch({ type: LOGGED_IN_STATUS_CHANGED, loggedIn: false });
-  history.push('/');
+  //history.push('/');
 };
 
 const logoutUserFail = () => {
-  
+
 };

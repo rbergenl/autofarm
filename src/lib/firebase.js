@@ -29,9 +29,66 @@ export function saveUser (user) {
 }
 */
 
+import Expo from 'expo';
+/*
+    async function signInWithGoogleAsync() {
+      try {
+        const result = await Expo.Google.logInAsync({
+          androidClientId: YOUR_CLIENT_ID_HERE,
+          iosClientId: YOUR_CLIENT_ID_HERE,
+          scopes: ['profile', 'email'],
+        });
+
+        if (result.type === 'success') {
+          return result.accessToken;
+        } else {
+          return {cancelled: true};
+        }
+      } catch(e) {
+        return {error: true};
+      }
+    }
+*/
 export const loginUser = () => {
   var provider = new auth.GoogleAuthProvider();
-  return new Promise((resolve, reject) => {
+  //return new Promise((resolve, reject) => {
+    // const {type, token} = await Expo.Google.
+        // LogInWithReadPermissionsAsync('103929293289898', {
+      //        permissions: ['public_profile', 'email', 'user_friends']
+      // })
+      /*
+      try {
+       Expo.Google.logInAsync({
+          androidClientId: YOUR_CLIENT_ID_HERE,
+          iosClientId: YOUR_CLIENT_ID_HERE,
+          scopes: ['profile', 'email'],
+        }).then(function(result) {
+          resolve(result)
+        }, function(e) {
+          reject(e)
+        });
+
+        if (result.type === 'success') {
+          resolve(result)
+          return result.accessToken;
+        } else {
+          return {cancelled: true};
+        }
+      } catch(e) {
+        reject(e)
+        return {error: true};
+      }
+      */
+
+    /*
+      // build firebase credential with google access token
+      const credential = firebase.auth.GoogleAuthProvider.credential(token);
+      // sign in with credential from the google user
+      firebase.auth().signInWithCredential(credential).catch((error) => {
+        alert('An error occured: ' + error.message)
+      });
+    */
+    /*
     auth().signInWithPopup(provider).then(function(result) {
           const userData = Object.assign({
               // The signed-in user info.
@@ -50,8 +107,8 @@ export const loginUser = () => {
           var credential = error.credential;
           // ...
           reject(error)
-        });
-  });
+        });*/
+//  });
 };
 
 export const logoutUser = () => {
