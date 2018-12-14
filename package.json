@@ -9,6 +9,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --mode development",
+	"start-metro": "node node_modules/react-native/local-cli/cli.js start",
     "build": "webpack --mode production",
     "config": "node ./src/config/create",
     "createfirebaseconfig": "firebase setup:web --json > ./src/config/firebase.json"
