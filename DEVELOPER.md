@@ -2,7 +2,7 @@
 
 ## Prerequisites
 - Have a Google account
-- Have a Github account and a repository created
+- Have a Github account and a repository created (default branch set to develop)
 - Login to Cloud9 with your Github account and start a workspace attached to the repository
 - Create a project in console.firebase.google.com (and enable Firestore in the Database section)
 
@@ -160,5 +160,5 @@ export default class RootRouter extends Component {
 
 
 ### Common problems
--when loading firebase while using react-native, you might get the error "undefined self.fetch". This problem is in the fetch module, and can be solved by opening the from the Dev menu on the device the Remote JS debugger
+- when loading firebase while using react-native, you might get the error "undefined self.fetch". This problem is in the fetch module, and can be solved by opening the from the Dev menu on the device the Remote JS debugger
 - Install the latest version of XDE https://github.com/expo/xde/releases. If you don’t update, you will see an error similar to: `Error: Cannot find module 'exponent/tools/hashAssetFiles'...` (actually, it is because of expo should be under 'dependencies' in the package.json)

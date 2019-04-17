@@ -22,6 +22,7 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 const theme = createMuiTheme();
 import './index.css';
 
+// App Shell
 render(
   <Provider store={store}>
     <MuiThemeProvider theme={theme}>
