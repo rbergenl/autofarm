@@ -21,7 +21,7 @@ import { connect } from 'react-redux';
 import { loggedInStatusChanged, loginUser } from '../actions/authActions';
 
 import Expo from 'expo';
-import Config from './config';
+import Config from '../config';
 
 const fakeAuth = {
   isAuthenticated: false,
@@ -132,6 +132,10 @@ const PublicRoute = ({component: Component, authStatus, ...rest}) => {
   );
 };
 
+const mapStateToProps = state => (
+  { loggedIn: state.auth.loggedIn }
+);
+
 class Root extends Component {
 
   static propTypes = {
@@ -179,8 +183,5 @@ class Root extends Component {
   }
 }
 
-const mapStateToProps = state => (
-  { loggedIn: state.auth.loggedIn }
-);
 
 export default withRouter(connect(mapStateToProps, { loggedInStatusChanged })(Root));

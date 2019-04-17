@@ -1,8 +1,8 @@
 {
-  "expoServerPort": null,
-  "packagerPort": null,
-  "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null
+  "expoServerPort": 19000,
+  "packagerPort": 19001,
+  "packagerPid": 5168,
+  "expoServerNgrokUrl": "https://be-28q.rbergenl.autofarm.exp.direct",
+  "packagerNgrokUrl": "https://packager.be-28q.rbergenl.autofarm.exp.direct",
+  "ngrokPid": 9940
 }
